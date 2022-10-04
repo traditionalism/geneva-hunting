@@ -7,6 +7,13 @@ A standalone hunting-script for FiveM.
 ### Installation
 Install this as you would any other resource! As of right now there is *no* config options.
 
+### Performance
+
+**Idle:**
+![Idle](/images/Screenshot%202022-10-04%20152016.png)
+**In Use:**
+![In Use](/images/Screenshot%202022-10-04%20152202.png)
+
 ### Known Issues
 
 Ending the hunt while waiting for an animal to take your bait, will result in you having to wait longer than you usually would. This is due to the main thread being slept.

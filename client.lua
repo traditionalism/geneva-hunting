@@ -248,7 +248,7 @@ CreateThread(function()
                 end
             end
         else
-            Wait(1000)
+            Wait(2000)
         end
     end
 end)
