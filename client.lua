@@ -161,6 +161,8 @@ CreateThread(function()
                             LoadDict('anim@gangops@facility@servers@bodysearch@')
 
                             notify('Placing ~g~bait~s~...')
+
+                            SetCurrentPedWeapon(PlayerPedId(), `weapon_unarmed`, true)
                             TaskPlayAnim(PlayerPedId(), 'amb@medic@standing@kneel@base', 'base', 8.0, -8.0, -1, 1, 0, false, false, false)
                             TaskPlayAnim(PlayerPedId(), 'anim@gangops@facility@servers@bodysearch@', 'player_search', 8.0, -8.0, -1, 48, 0, false, false, false)
 
@@ -168,7 +170,7 @@ CreateThread(function()
 
                             ClearPedTasks(PlayerPedId())
 
-                            bait = CreateObject(`prop_food_tray_02`, pedCoords.x + 1.0, pedCoords.y, pedCoords.z, true, true, false)
+                            bait = CreateObject(`prop_food_tray_02`, pedCoords.x + 0.5, pedCoords.y, pedCoords.z, true, true, false)
                             PlaceObjectOnGroundProperly(bait)
                             FreezeEntityPosition(bait, true)
                             SetEntityCanBeDamaged(bait, false)
@@ -201,8 +203,6 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    local timer = GetGameTimer()
-
     while true do
         Wait(0)
 
@@ -222,15 +222,17 @@ CreateThread(function()
         Wait(0)
 
         if animalDead then
-            if #(pedCoords - GetEntityCoords(animalPed)) <= 2.0 then
+            if #(pedCoords - GetEntityCoords(animalPed)) <= 1.5 then
                 DisplayHelpTextThisFrame('collect_carcass')
 
                 if IsControlJustPressed(0, 51) then
                     collectingCarcass = true
+                    notify('Collecting ~y~carcass~s~...')
 
                     LoadDict('amb@medic@standing@kneel@base')
                     LoadDict('anim@gangops@facility@servers@bodysearch@')
 
+                    SetCurrentPedWeapon(PlayerPedId(), `weapon_unarmed`, true)
                     TaskPlayAnim(PlayerPedId(), 'amb@medic@standing@kneel@base', 'base', 8.0, -8.0, -1, 1, 0, false, false, false)
                     TaskPlayAnim(PlayerPedId(), 'anim@gangops@facility@servers@bodysearch@', 'player_search', 8.0, -8.0, -1, 48, 0, false, false, false)
 
@@ -274,6 +276,22 @@ CreateThread(function()
         end
 
         Wait(500)
+    end
+end)
+
+CreateThread(function()
+    while true do
+        Wait(0)
+
+        if atSpot and animalPed ~= nil and not animalAtBait then
+            if IsPedShooting(PlayerPedId()) or IsPedDeadOrDying(animalPed, 1) then
+                notify('You\'ve ~r~fired~s~ your weapon ~r~prematurely~s~, the hunt\'s been ~r~ended~s~.')
+                Wait(3500)
+                endHunt()
+            end
+        else
+            Wait(2000)
+        end
     end
 end)
 
