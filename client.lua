@@ -200,7 +200,6 @@ CreateThread(function()
     end
 end)
 
--- Secondary Thread
 CreateThread(function()
     local timer = GetGameTimer()
 
@@ -218,7 +217,6 @@ CreateThread(function()
     end
 end)
 
--- Teritary Thread
 CreateThread(function()
     while true do
         Wait(0)
@@ -253,7 +251,6 @@ CreateThread(function()
     end
 end)
 
--- Update Thread
 CreateThread(function()
     while true do
         pedCoords = GetEntityCoords(PlayerPedId())
@@ -280,7 +277,6 @@ CreateThread(function()
     end
 end)
 
--- End Thread
 CreateThread(function()
     while true do
         Wait(0)
@@ -295,7 +291,6 @@ CreateThread(function()
     end
 end)
 
--- Blip Thread
 CreateThread(function()
     local blip = AddBlipForCoord(markerCoords.x, markerCoords.y, markerCoords.z)
     SetBlipSprite(blip, 141)
