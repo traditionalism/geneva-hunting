@@ -34,14 +34,19 @@ local function notify(text)
     DrawNotification(false, false)
 end
 
+---@param model string | number
+local function LoadModel(model)
+    RequestModel(model)
+
+    while not HasModelLoaded(model) do
+        Wait(0)
+    end
+end
+
 -- Create's the hunting-vehicle, and returns the vehicle handle.
 ---@return CVehicle
 local function spawnVehicle()
-    RequestModel(`bodhi2`)
-
-    while not HasModelLoaded(`bodhi2`) do
-        Wait(0)
-    end
+    LoadModel(`bodhi2`)
 
     vehicle = CreateVehicle(`bodhi2`, -1497.13, 4968.39, 63.54, 178.29, true, false)
     SetVehicleOnGroundProperly(vehicle)
@@ -59,15 +64,6 @@ local function randomItem(table)
     end
     index = keys[random(1, #keys)]
     return table[index]
-end
-
----@param model string | number
-local function LoadModel(model)
-    RequestModel(model)
-
-    while not HasModelLoaded(model) do
-        Wait(0)
-    end
 end
 
 ---@param dict string
